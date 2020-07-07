@@ -46,7 +46,7 @@ for doc in my_collection.find():
 print("\n")
 
 # We can also find a single document. Let's find a document
-# that has the string "potato" in the Ingredients list.
+# that has the string "potato" in the ingredients list.
 
 my_doc = my_collection.find_one({"ingredients": "potato"})
 
