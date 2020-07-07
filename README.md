@@ -55,7 +55,7 @@ pip install pymongo dnspython
       "mongodb+srv://<username>:<password>@<cluster-name>/test?retryWrites=true&w=majority")
 ```
 
-### 5. Run the program
+### 4. Run the program
 
 1. At your command prompt, navigate to the `atlas_starter_python` directory.
 
