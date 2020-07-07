@@ -61,7 +61,7 @@ print("\n")
 #
 # You can update a single document or multiple documents in a single call.
 # 
-# Here we update the PrepTimeInMinutes value on the document we 
+# Here we update the prep_time value on the document we 
 # just found.
 #
 # Note the 'new=True' option: if omitted, find_one_and_update returns the
