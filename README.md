@@ -74,7 +74,8 @@ Are you having trouble getting connected to your MongoDB Atlas instance?
 Double-check the following:
 
 1. Have you replaced the placeholder text with a valid connection string
-   provided by the Atlas UI?
+   provided by the Atlas UI? Read more [here](https://docs.atlas.mongodb.com/driver-connection/)
+   for further context.
 
 2. Have you [whitelisted your current IP address](https://docs.atlas.mongodb.com/security-whitelist/)
-   in the Atlas UI? Read more [here](https://docs.atlas.mongodb.com/driver-connection/) for further context.
+   in the Atlas UI?
