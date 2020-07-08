@@ -23,7 +23,7 @@ connected to your instance of MongoDB Atlas.
 ### 1. Download the Repository
 
 To get started with this sample project, download this repository to your
-programming environment. You can close this project using Git
+programming environment. You can clone this project using Git
 version control:
 
 ```
@@ -77,4 +77,4 @@ Double-check the following:
    provided by the Atlas UI?
 
 2. Have you [whitelisted your current IP address](https://docs.atlas.mongodb.com/security-whitelist/)
-   in the Atlas UI?
+   in the Atlas UI? Read more [here](https://docs.atlas.mongodb.com/driver-connection/) for further context.
