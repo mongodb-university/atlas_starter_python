@@ -1,18 +1,22 @@
 import pymongo
+import sys
 
 # Replace the placeholder data with your Atlas connection string. Be sure it includes
 # a valid username and password! Note that in a production environment,
 # you should not store your password in plain-text here.
 
-client = pymongo.MongoClient(
-      "mongodb+srv://<username>:<password>@<cluster-name>/test?retryWrites=true&w=majority")
+try:
+  client = pymongo.MongoClient(<Your Atlas Connection String>)
+   
+# return a friendly error if a URI error is thrown 
+except pymongo.errors.ConfigurationError:
+  print("An Invalid URI host error was received. Is your Atlas host name correct in your connection string?")
+  sys.exit(1)
 
-# use a database named "my_database"
-
-db = client.my_database
+# use a database named "myDatabase"
+db = client.myDatabase
 
 # use a collection named "recipes"
-
 my_collection = db["recipes"]
 
 recipe_documents = [{ "name": "elotes", "ingredients": ["corn", "mayonnaise", "cotija cheese", "sour cream", "lime"], "prep_time": 35 },
@@ -21,8 +25,13 @@ recipe_documents = [{ "name": "elotes", "ingredients": ["corn", "mayonnaise", "c
                     { "name": "fried rice", "ingredients": ["rice", "soy sauce", "egg", "onion", "pea", "carrot", "sesame oil"], "prep_time": 40 }]
 
 # drop the collection in case it already exists
+try:
+  my_collection.drop()  
 
-my_collection.drop()  
+# return a friendly error if an authentication error is thrown
+except pymongo.errors.OperationFailure:
+  print("An authentication error was received. Are your username and password correct in your connection string?")
+  sys.exit(1)
 
 # INSERT DOCUMENTS
 #
@@ -30,24 +39,37 @@ my_collection.drop()
 # In this example, we're going to create four documents and then 
 # insert them all with insert_many().
 
-my_collection.insert_many(recipe_documents)
- 
+try: 
+ result = my_collection.insert_many(recipe_documents)
+
+# return a friendly error if the operation fails
+except pymongo.errors.OperationFailure:
+  print("An authentication error was received. Are you sure your database user is authorized to perform write operations?")
+  sys.exit(1)
+else:
+  inserted_count = len(result.inserted_ids)
+  print(f"I inserted {inserted_count} documents.")
+
 # FIND DOCUMENTS
 #
 # Now that we have data in Atlas, we can read it. To retrieve all of
 # the data in a collection, we call find() with an empty filter. 
 
-for doc in my_collection.find():
-  my_recipe = doc['name']
-  my_ingredient_count = len(doc['ingredients'])
-  my_prep_time = doc['prep_time']
-  print(f"{my_recipe} has {my_ingredient_count} ingredients and takes {my_prep_time} minutes to make.")
+result = my_collection.find()
+
+if len(list(result)) > 0:
+  for doc in result:
+    my_recipe = doc['name']
+    my_ingredient_count = len(doc['ingredients'])
+    my_prep_time = doc['prep_time']
+    print(f"{my_recipe} has {my_ingredient_count} ingredients and takes {my_prep_time} minutes to make.")
+else:
+  print("No documents found.")
 
 print("\n")
 
 # We can also find a single document. Let's find a document
 # that has the string "potato" in the ingredients list.
-
 my_doc = my_collection.find_one({"ingredients": "potato"})
 
 if my_doc is not None:
