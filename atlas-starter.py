@@ -74,7 +74,7 @@ my_doc = my_collection.find_one({"ingredients": "potato"})
 
 if my_doc is not None:
   print("A recipe which uses potato:")
-  print(my_collection.find_one({"ingredients": "potato"}))
+  print(my_doc)
 else:
   print("I didn't find any recipes that contain 'potato' as an ingredient.")
 print("\n")
@@ -83,8 +83,7 @@ print("\n")
 #
 # You can update a single document or multiple documents in a single call.
 # 
-# Here we update the prep_time value on the document we 
-# just found.
+# Here we update the prep_time value on the document we just found.
 #
 # Note the 'new=True' option: if omitted, find_one_and_update returns the
 # original document instead of the updated one.
