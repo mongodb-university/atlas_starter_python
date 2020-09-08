@@ -7,7 +7,7 @@ import sys
 
 try:
   client = pymongo.MongoClient(<Your Atlas Connection String>)
-   
+  
 # return a friendly error if a URI error is thrown 
 except pymongo.errors.ConfigurationError:
   print("An Invalid URI host error was received. Is your Atlas host name correct in your connection string?")
@@ -48,7 +48,9 @@ except pymongo.errors.OperationFailure:
   sys.exit(1)
 else:
   inserted_count = len(result.inserted_ids)
-  print(f"I inserted {inserted_count} documents.")
+  print("I inserted %x documents." %(inserted_count))
+
+  print("\n")
 
 # FIND DOCUMENTS
 #
@@ -57,12 +59,13 @@ else:
 
 result = my_collection.find()
 
-if len(list(result)) > 0:
+if result:    
   for doc in result:
     my_recipe = doc['name']
     my_ingredient_count = len(doc['ingredients'])
     my_prep_time = doc['prep_time']
-    print(f"{my_recipe} has {my_ingredient_count} ingredients and takes {my_prep_time} minutes to make.")
+    print("%s has %x ingredients and takes %x minutes to make." %(my_recipe, my_ingredient_count, my_prep_time))
+    
 else:
   print("No documents found.")
 
@@ -108,5 +111,5 @@ print("\n")
 # in which the "name" field is either "elotes" or "fried rice".
 
 my_result = my_collection.delete_many({ "$or": [{ "name": "elotes" }, { "name": "fried rice" }]})
-print(f"I deleted {my_result.deleted_count} records.")
+print("I deleted %x records." %(my_result.deleted_count))
 print("\n")
